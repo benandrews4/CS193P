@@ -22,11 +22,16 @@ class CalculatorBrain
         "π" : Operation.Constant(M_PI),
         "e" : Operation.Constant(M_E),
         "√" : Operation.UnaryOperation(sqrt),
+        "sin" : Operation.UnaryOperation(sin),
         "cos" : Operation.UnaryOperation(cos),
+        "tan" : Operation.UnaryOperation(tan),
+        "x²" : Operation.UnaryOperation({ pow($0, 2) }),
+        "±" : Operation.UnaryOperation({ -$0 }),
         "×" : Operation.BinaryOperation({ $0 * $1 }),
         "÷" : Operation.BinaryOperation({ $0 / $1 }),
         "+" : Operation.BinaryOperation({ $0 + $1 }),
         "-" : Operation.BinaryOperation({ $0 - $1 }),
+        "xʸ" : Operation.BinaryOperation({ pow($0, $1) }),
         "=" : Operation.Equals
     ]
     
@@ -71,7 +76,7 @@ class CalculatorBrain
         var binaryFunction: (Double, Double) -> Double
         var firstOperand: Double
     }
-
+    
     
     var result: Double {
         get {
