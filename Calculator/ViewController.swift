@@ -27,6 +27,16 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction private func touchPoint(sender: UIButton) {
+        if (!userIsInTheMiddleOfTyping) {
+            display.text = "0."
+        } else if (display.text!.rangeOfString(".") == nil) {
+            display.text = display.text! + "."
+        }
+        userIsInTheMiddleOfTyping = true
+    }
+    
+    
     private var displayValue: Double {
         get {
             return Double(display.text!)!
