@@ -42,7 +42,8 @@ class ViewController: UIViewController {
             return Double(display.text!)!
         }
         set {
-            display.text = String(newValue)
+            let digit = String(newValue)
+            display.text = digit.hasSuffix(".0") ? String(digit.characters.dropLast(2)) : digit
         }
     }
     
