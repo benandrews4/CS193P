@@ -37,6 +37,13 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func touchClear(sender: UIButton) {
+        displayValue = 0;
+        userIsInTheMiddleOfTyping = false
+        brain.pending = nil;
+    }
+    
+    
     private var displayValue: Double {
         get {
             return Double(display.text!)!
