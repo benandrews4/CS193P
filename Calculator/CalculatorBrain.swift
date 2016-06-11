@@ -78,6 +78,16 @@ class CalculatorBrain
     }
     
     
+    var description: String = ""
+    
+    
+    var isPartialResult: Bool {
+        get {
+            return pending != nil
+        }
+    }
+    
+    
     var result: Double {
         get {
             return accumulator

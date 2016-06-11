@@ -9,8 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet private weak var display: UILabel!
+    
+    @IBOutlet private weak var history: UILabel!
     
     private var userIsInTheMiddleOfTyping = false
     
@@ -39,8 +41,10 @@ class ViewController: UIViewController {
     
     @IBAction func touchClear(sender: UIButton) {
         displayValue = 0;
+        history.text = "";
         userIsInTheMiddleOfTyping = false
         brain.pending = nil;
+        brain.description = "";
     }
     
     
@@ -58,6 +62,17 @@ class ViewController: UIViewController {
     private var brain = CalculatorBrain()
     
     
+    private func updateBrainDescription(symbol: String) {
+        if (!history.text!.hasSuffix("=")) {
+            brain.description += display.text!
+        }
+        
+        if (symbol != "=") {
+            brain.description += symbol
+        }
+    }
+    
+    
     @IBAction private func performOperation(sender: UIButton) {
         if userIsInTheMiddleOfTyping {
             brain.setOperand(displayValue)
@@ -66,8 +81,13 @@ class ViewController: UIViewController {
         
         if let mathematicalSymbol = sender.currentTitle {
             brain.performOperation(mathematicalSymbol)
+            updateBrainDescription(mathematicalSymbol)
         }
+        
         displayValue = brain.result
+        history.text = (brain.isPartialResult) ?
+            brain.description + "..." :
+            brain.description + "="
     }
 }
 
