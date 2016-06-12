@@ -59,6 +59,18 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func backspace(sender: UIButton) {
+        if (userIsInTheMiddleOfTyping) {
+            if ((display.text!.characters.count) > 1) {
+                display.text = String(display.text!.characters.dropLast(1))
+            } else if ((display.text?.characters.count) == 1) {
+                display.text = "0"
+                userIsInTheMiddleOfTyping = false
+            }
+        }
+    }
+    
+    
     private var brain = CalculatorBrain()
     
     

@@ -295,17 +295,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bEw-q9-Cpc">
-                                <rect key="frame" x="380" y="45" width="64" height="64"/>
-                                <color key="backgroundColor" red="0.043137254901960784" green="0.043137254901960784" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="e">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h1B-NX-pU4"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0y5-9d-Kwx">
                                 <rect key="frame" x="308" y="45" width="64" height="64"/>
                                 <color key="backgroundColor" red="0.043137254901960784" green="0.043137254901960784" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
@@ -318,6 +307,17 @@
                                     <action selector="touchClear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1my-ok-5zp"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bG-9f-vza">
+                                <rect key="frame" x="380" y="45" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.043137254899999998" green="0.043137254899999998" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="←">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backspace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xyx-i7-YoD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -328,7 +328,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-409" y="287"/>
+            <point key="canvasLocation" x="-124" y="284"/>
         </scene>
     </scenes>
 </document>
