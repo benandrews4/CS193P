@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction private func touchPoint(sender: UIButton) {
+    @IBAction private func touchPoint() {
         if (!userIsInTheMiddleOfTyping) {
             display.text = "0."
         } else if (display.text!.rangeOfString(".") == nil) {
@@ -39,12 +39,12 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func touchClear(sender: UIButton) {
+    @IBAction func touchClear() {
         displayValue = 0;
         history.text = "";
         userIsInTheMiddleOfTyping = false
-        brain.pending = nil;
-        brain.description = "";
+        
+        brain.clear()
     }
     
     
@@ -54,12 +54,14 @@ class ViewController: UIViewController {
         }
         set {
             let digit = String(newValue)
+            
+            // Remove ".0" as variable is a Double
             display.text = digit.hasSuffix(".0") ? String(digit.characters.dropLast(2)) : digit
         }
     }
     
     
-    @IBAction func backspace(sender: UIButton) {
+    @IBAction func backspace() {
         if (userIsInTheMiddleOfTyping) {
             if ((display.text!.characters.count) > 1) {
                 display.text = String(display.text!.characters.dropLast(1))
@@ -70,11 +72,11 @@ class ViewController: UIViewController {
         }
     }
     
-    
     private var brain = CalculatorBrain()
     
     
     private func updateBrainDescription(symbol: String) {
+        // Ensure only operands are in description
         if (!history.text!.hasSuffix("=")) {
             brain.description += display.text!
         }
@@ -86,6 +88,7 @@ class ViewController: UIViewController {
     
     
     @IBAction private func performOperation(sender: UIButton) {
+        // Set operand if something has been entered, otherwise use current result
         if userIsInTheMiddleOfTyping {
             brain.setOperand(displayValue)
             userIsInTheMiddleOfTyping = false
