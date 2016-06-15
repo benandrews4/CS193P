@@ -14,7 +14,21 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var history: UILabel!
     
+    private var brain = CalculatorBrain()
+    
     private var userIsInTheMiddleOfTyping = false
+    
+    private var displayValue: Double {
+        get {
+            return Double(display.text!)!
+        }
+        set {
+            let digit = String(newValue)
+            
+            // Remove ".0" as variable is a Double
+            display.text = digit.hasSuffix(".0") ? String(digit.characters.dropLast(2)) : digit
+        }
+    }
     
     
     @IBAction private func touchDigit(sender: UIButton) {
@@ -48,19 +62,6 @@ class ViewController: UIViewController {
     }
     
     
-    private var displayValue: Double {
-        get {
-            return Double(display.text!)!
-        }
-        set {
-            let digit = String(newValue)
-            
-            // Remove ".0" as variable is a Double
-            display.text = digit.hasSuffix(".0") ? String(digit.characters.dropLast(2)) : digit
-        }
-    }
-    
-    
     @IBAction func backspace() {
         if (userIsInTheMiddleOfTyping) {
             if ((display.text!.characters.count) > 1) {
@@ -72,7 +73,24 @@ class ViewController: UIViewController {
         }
     }
     
-    private var brain = CalculatorBrain()
+    
+    @IBAction func setMemory(sender: UIButton) {
+        // ->M button
+        if var calcVariable = sender.currentTitle {
+            calcVariable = String(calcVariable.characters.dropFirst(1))
+            brain.variableValues[calcVariable] = displayValue
+            userIsInTheMiddleOfTyping = false
+        }
+    }
+    
+    
+    @IBAction func getMemory(sender: UIButton) {
+        // M button
+        if let calcVariable = sender.currentTitle {
+            brain.setOperand(calcVariable)
+            display.text = calcVariable
+        }
+    }
     
     
     private func updateBrainDescription(symbol: String) {
@@ -103,6 +121,8 @@ class ViewController: UIViewController {
         history.text = (brain.isPartialResult) ?
             brain.description + "..." :
             brain.description + "="
+        
+        print("Internal Program \(brain.program)")
     }
 }
 

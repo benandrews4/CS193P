@@ -12,6 +12,16 @@ class CalculatorBrain
 {
     private var accumulator = 0.0
     private var internalProgram = [AnyObject]()
+    var variableValues: Dictionary<String, Double> = [:]
+    
+    
+    func setOperand(variableName: String) {
+        if let operand = variableValues[variableName] {
+            accumulator = operand
+        } else {
+            accumulator = 0.0
+        }
+    }
     
     
     func setOperand(operand: Double) {
@@ -115,10 +125,11 @@ class CalculatorBrain
     
     
     func clear() {
-        accumulator = 0.0;
-        pending = nil;
-        description = "";
+        accumulator = 0.0
+        pending = nil
+        description = ""
         internalProgram.removeAll()
+        variableValues = [:]
     }
     
     
