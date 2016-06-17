@@ -62,13 +62,24 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func backspace() {
+    @IBAction func undo() {
         if (userIsInTheMiddleOfTyping) {
+            // Backspace
             if ((display.text!.characters.count) > 1) {
                 display.text = String(display.text!.characters.dropLast(1))
             } else if ((display.text?.characters.count) == 1) {
                 display.text = "0"
                 userIsInTheMiddleOfTyping = false
+            }
+        } else {
+            // Undo
+            var program = brain.program as? [AnyObject]
+            if program?.count > 0 {
+                program?.popLast()
+                brain.program = program!
+                
+                history.text = getHistory()
+                displayValue = brain.result
             }
         }
     }
@@ -93,15 +104,21 @@ class ViewController: UIViewController {
     }
     
     
-    private func updateBrainDescription(symbol: String) {
-        // Ensure only operands are in description
-        if (!history.text!.hasSuffix("=")) {
-            brain.description += display.text!
+    private func getHistory() -> String {
+        let program = brain.program as? [AnyObject]
+        
+        var ops = ""
+        for op in program! {
+            ops += String(op)
         }
         
-        if (symbol != "=") {
-            brain.description += symbol
+        if (brain.isPartialResult) {
+            ops += "..."
+        } else if (!ops.hasSuffix("=")) {
+            ops += "="
         }
+        
+        return ops
     }
     
     
@@ -114,15 +131,10 @@ class ViewController: UIViewController {
         
         if let mathematicalSymbol = sender.currentTitle {
             brain.performOperation(mathematicalSymbol)
-            updateBrainDescription(mathematicalSymbol)
+            history.text = getHistory()
         }
         
         displayValue = brain.result
-        history.text = (brain.isPartialResult) ?
-            brain.description + "..." :
-            brain.description + "="
-        
-        print("Internal Program \(brain.program)")
     }
 }
 

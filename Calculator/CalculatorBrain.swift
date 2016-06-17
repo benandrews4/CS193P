@@ -94,9 +94,6 @@ class CalculatorBrain
     }
     
     
-    var description: String = ""
-    
-    
     var isPartialResult: Bool {
         get {
             return pending != nil
@@ -127,7 +124,6 @@ class CalculatorBrain
     func clear() {
         accumulator = 0.0
         pending = nil
-        description = ""
         internalProgram.removeAll()
         variableValues = [:]
     }
