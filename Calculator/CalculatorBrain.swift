@@ -18,6 +18,11 @@ class CalculatorBrain
     func setOperand(variableName: String) {
         if let operand = variableValues[variableName] {
             accumulator = operand
+            
+            // Calculator variables
+            var variables = [String: Double]()
+            variables[variableName] = operand
+            internalProgram.append(variables)
         } else {
             accumulator = 0.0
         }
@@ -101,6 +106,8 @@ class CalculatorBrain
     }
     
     
+    private let CALC_VARIABLES = ["M"]
+    
     typealias PropertyList = AnyObject
     var program: PropertyList {
         get {
@@ -110,10 +117,25 @@ class CalculatorBrain
             clear()
             if let arrayOfOps = newValue as? [AnyObject] {
                 for op in arrayOfOps {
-                    if let operand = op as? Double {
+                    // Variable
+                    if op is [String: Double] {
+                        for calcVar in CALC_VARIABLES {
+                            var variables = op as! [String : Double]
+                            variableValues[calcVar] = variables[calcVar]
+                            setOperand(calcVar)
+                            
+                            self.description += calcVar
+                        }
+                        
+                    // Operand
+                    } else if let operand = op as? Double {
                         setOperand(operand)
+                        self.description += String(operand)
+                        
+                    // Operation
                     } else if let operation = op as? String {
                         performOperation(operation)
+                        self.description += operation
                     }
                 }
             }
@@ -121,11 +143,15 @@ class CalculatorBrain
     }
     
     
+    var description: String = ""
+    
+    
     func clear() {
         accumulator = 0.0
         pending = nil
         internalProgram.removeAll()
         variableValues = [:]
+        description = ""
     }
     
     
